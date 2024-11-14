@@ -17,7 +17,7 @@ import (
 
 	"github.com/launchbynttdata/lcaf-component-terratest/lib"
 	"github.com/launchbynttdata/lcaf-component-terratest/types"
-	"github.com/launchbynttdata/tf-azurerm-module_primitive-function_app/tests/testimpl"
+	"github.com/launchbynttdata/tf-azurerm-module_primitive-web_app_slot/tests/testimpl"
 )
 
 const (
@@ -34,11 +34,11 @@ func TestFunctionAppModule(t *testing.T) {
 		SetTestSpecificFlags(map[string]types.TestFlags{
 			"complete_windows": {
 				"IS_TERRAFORM_IDEMPOTENT_APPLY": false,
-				"SKIP_TEST":                     true,
+				"SKIP_TEST":                     false,
 			},
 			"complete_linux": {
 				"IS_TERRAFORM_IDEMPOTENT_APPLY": false,
-				"SKIP_TEST":                     true,
+				"SKIP_TEST":                     false,
 			},
 		}).
 		Build()
