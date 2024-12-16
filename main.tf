@@ -516,6 +516,12 @@ resource "azurerm_windows_web_app_slot" "web_app_slot" {
   virtual_network_subnet_id                      = var.virtual_network_subnet_id == null ? null : var.virtual_network_subnet_id
   webdeploy_publish_basic_authentication_enabled = var.webdeploy_publish_basic_authentication_enabled
   zip_deploy_file                                = var.zip_deploy_file == null ? null : var.zip_deploy_file
+
+  lifecycle {
+    ignore_changes = [
+      app_settings
+    ]
+  }
 }
 
 resource "azurerm_linux_web_app_slot" "web_app_slot" {
@@ -989,4 +995,10 @@ resource "azurerm_linux_web_app_slot" "web_app_slot" {
   virtual_network_subnet_id                      = var.virtual_network_subnet_id == null ? null : var.virtual_network_subnet_id
   webdeploy_publish_basic_authentication_enabled = var.webdeploy_publish_basic_authentication_enabled
   zip_deploy_file                                = var.zip_deploy_file == null ? null : var.zip_deploy_file
+
+  lifecycle {
+    ignore_changes = [
+      app_settings
+    ]
+  }
 }
