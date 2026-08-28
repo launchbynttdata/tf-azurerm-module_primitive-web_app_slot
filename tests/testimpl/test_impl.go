@@ -25,9 +25,9 @@ func TestFunctionApp(t *testing.T, ctx types.TestContext) {
 		t.Fatal("ARM_SUBSCRIPTION_ID environment variable is not set")
 	}
 
-	webAppHostname := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
+	webAppHostname := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
 
-	status := retry.DoWithRetry(t, "Check if the function app is up and running", 6, 10*time.Second, func() (string, error) {
+	status := retry.DoWithRetryContext(t, t.Context(), "Check if the function app is up and running", 6, 10*time.Second, func() (string, error) {
 		res, err := http.Get(fmt.Sprintf("https://%s", webAppHostname))
 		return strconv.FormatInt(int64(res.StatusCode), 10), err
 	})
@@ -54,9 +54,9 @@ func TestComposablePrivateFuncApp(t *testing.T, ctx types.TestContext) {
 	}
 
 	t.Run("TestDefaultHostName", func(t *testing.T) {
-		defaultHostname := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
-		resourceGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "resource_group_name")
-		slotName := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_name")
+		defaultHostname := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
+		resourceGroupName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "resource_group_name")
+		slotName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_name")
 
 		azureWebApp, err := webAppClient.Get(context.Background(), resourceGroupName, slotName, nil)
 		if err != nil {
@@ -67,9 +67,9 @@ func TestComposablePrivateFuncApp(t *testing.T, ctx types.TestContext) {
 
 	t.Run("TestFunctionAppID", func(t *testing.T) {
 
-		resourceGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "resource_group_name")
-		slotName := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_name")
-		functionAppID := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_id")
+		resourceGroupName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "resource_group_name")
+		slotName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_name")
+		functionAppID := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_id")
 
 		azureWebApp, err := webAppClient.Get(context.Background(), resourceGroupName, slotName, nil)
 		if err != nil {
@@ -79,9 +79,9 @@ func TestComposablePrivateFuncApp(t *testing.T, ctx types.TestContext) {
 	})
 
 	t.Run("TestSlotUrl", func(t *testing.T) {
-		slotUrl := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
-		resourceGroupName := terraform.Output(t, ctx.TerratestTerraformOptions(), "resource_group_name")
-		slotName := terraform.Output(t, ctx.TerratestTerraformOptions(), "web_app_slot_name")
+		slotUrl := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_default_hostname")
+		resourceGroupName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "resource_group_name")
+		slotName := terraform.OutputContext(t, context.Background(), ctx.TerratestTerraformOptions(), "web_app_slot_name")
 
 		azureWebApp, err := webAppClient.Get(context.Background(), resourceGroupName, slotName, nil)
 		if err != nil {
